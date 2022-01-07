@@ -1,0 +1,122 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+library(RPostgreSQL)
+con <- dbConnect(PostgreSQL(), user= "globetrotter", password="alpacaalpaca", dbname="basketball", host="blaskey.dev", port="5432")
+dbListTables(con)
+```
+### Player Table Validation
+```{r}
+dtab = dbGetQuery(con, "select weight, height from player")
+data(dtab)
+head(dtab)
+```
+```{r}
+library(validate)
+rules <- validator(weight >= 0
+                 , height >= 0)
+
+out   <- confront(dtab, rules)              
+```
+
+```{r}
+summary(out)
+```
+```{r}
+plot(out)
+```
+### Team Table Validation
+```{r}
+gtab<-dbGetQuery(con, "select team_id, min_year_in_nba_champ, max_year_in_nba_champ,year_founded,arena_capacity from team")
+gtab
+
+rules <- validator(team_id >= 0
+                 , min_year_in_nba_champ >= 0
+                 ,max_year_in_nba_champ>=0
+                 ,year_founded>=0
+                 ,arena_capacity>=0)
+
+out   <- confront(gtab, rules)    
+```
+
+```{r}
+summary(out)
+```
+```{r}
+plot(out)
+```
+### Game Table Validation
+
+```{r}
+ttab = dbGetQuery(con, "select game_id,home_team_id, away_team_id, season from game")
+ttab
+
+rules <- validator(game_id >= 0
+                 , home_team_id >= 0
+                 ,away_team_id>=0
+                 ,away_team_id>=0)
+
+out   <- confront(ttab, rules)
+```
+```{r}
+summary(out)
+```
+```{r}
+plot(out)
+```
+### Team Ranking Validation
+```{r}
+trtab = dbGetQuery(con, "select ranking_id , games_played_season, winning_games_season, losing_games_seasons, home_record_wins, home_record_loses, away_record_wins, away_record_loses from team_ranking")
+trtab
+
+rules <- validator(ranking_id >= 0
+                 , games_played_season >= 0
+                 ,winning_games_season>=0
+                 ,losing_games_seasons>=0
+                 ,home_record_wins>=0
+                 ,home_record_loses>=0
+                 ,away_record_wins>=0
+                 ,away_record_loses>=0)
+
+out   <- confront(trtab, rules)
+```
+```{r}
+summary(out)
+```
+```{r}
+plot(out)
+```
+### Player Game Detail Validation
+```{r}
+pgtab = dbGetQuery(con, "select seconds_played, field_goals_made, field_goals_attempted, three_pointers_made,three_pointers_attempted, free_throws_made, free_throws_attempted,offensive_rebounds, defensive_rebounds,assists,steals, blocked_shots, turonovers,personal_fouls, points from player_game_detail")
+pgtab
+```
+```{r}
+rules <- validator(seconds_played >= 0
+                 , field_goals_made >= 0
+                 ,field_goals_attempted>=0
+                 ,three_pointers_made>=0
+                 ,three_pointers_attempted>=0
+                 ,free_throws_made>=0
+                 ,free_throws_attempted>=0
+                 ,offensive_rebounds>=0
+                 ,defensive_rebounds>=0
+                 ,assists>=0
+                 ,steals>=0
+                 ,blocked_shots>=0
+                 ,turonovers>=0
+                 ,personal_fouls>=0
+                 ,points>=0)
+
+out   <- confront(pgtab, rules)
+```
+
+```{r}
+summary(out)
+```
+```{r}
+plot(out)
+```
+

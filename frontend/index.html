@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../favicon.ico">
+
+    <title>Globetrotters</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./deps/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="dashboard.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <div id="navBar"></div>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+        <h1 class="h2">The Globetrotters</h1>
+      </div>
+
+      <p>The globetrotters have created a comprehensive NBA data analysis toolkit. This toolkit consists of </p>
+
+      <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action active">
+          A dashboard providing access to data, data metrics, data visualization, and access to predictive models (you are looking at it now)
+        </a>
+        <a href="http://nicholasblaskey.com:8080/api/ui/" class="list-group-item list-group-item-action">
+          A fully documented REST API providing access to data and access to predictive models
+        </a>
+        <a href="./pages/clustering.html" class="list-group-item list-group-item-action">
+          An unsupervised clustering approach to give insight into players and their preformance
+        </a>
+        <a href="./pages/neuralNet.html" class="list-group-item list-group-item-action">
+          A neural network utilizing sentiment analysis of player tweets to predict outcomes of games
+        </a>
+        <a href="./pages/reinforcement.html" class="list-group-item list-group-item-action">
+          A reinforcement based approach to making a bot capable of betting on NBA games 
+        </a>
+        <a href="./pages/ensemble.html" class="list-group-item list-group-item-action">
+          A ensemble based approach using both the neural network and reinforcemnet approach for betting on NBA games 
+        </a>
+        <a href="https://github.com/NicholasBlaskey/DATA477-capping/tree/main/pipeline" class="list-group-item list-group-item-action">
+          An automated data pipeline that loads data into a database, cleanses it, and preforms feature engineering
+        </a>
+        <a href="https://github.com/NicholasBlaskey/DATA477-capping/tree/main/pipeline/dataQueue" class="list-group-item list-group-item-action">
+          A data queue  for a distrubted system of data producers which gives the potential for the database to always be up to date
+        </a>                
+        <a href="https://github.com/NicholasBlaskey/DATA477-capping/tree/main/analysisValidation" class="list-group-item list-group-item-action">
+          A statistical analysis and validation of the data
+        </a>        
+      </div>      
+
+      <p>All code, data, and the project paper is stored in a github repo <a href="https://github.com/NicholasBlaskey/DATA477-capping">https://github.com/NicholasBlaskey/DATA477-capping</a></p>
+
+      <p>The presentation can be found in the Panopto in the iLearn site</p>
+      
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+        <h1 class="h2">Team members</h1>
+      </div>
+
+      <div class="row">
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">Arjun Bhan</h5>
+            <p class="card-text" style="height: 100px">A Data Science & analytics major graduating 2022. Loves Celtic's Basketball.</p>
+            <a href="https://github.com/ArjunBhan" class="btn btn-primary">Github</a>
+            <a href="mailto:arjun.bhan1@marist.edu" class="btn btn-primary">Email</a>
+          </div>
+        </div>
+
+        <div style="width: 10px;"></div>
+        
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">Nick Blaskey</h5>
+            <p class="card-text" style="height: 100px">A senior Computer Science and Data Science major who is (hopefully) graduating soon. Indifferent to Basketball.</p>
+            <a href="https://github.com/NicholasBlaskey" class="btn btn-primary">Github</a>
+            <a href="mailto:nicholas.blaskey1@marist.edu" class="btn btn-primary">Email</a>
+          </div>
+        </div>
+
+        <div style="width: 10px;"></div>
+        
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">Mark Mantone</h5>
+            <p class="card-text" style="height: 100px">A senior Data Science & Analytics major graduating 2021.</p>
+            <a href="https://github.com/mark-mantone" class="btn btn-primary">Github</a>
+            <a href="mailto:mark.mantone1@marist.edu" class="btn btn-primary">Email</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+        <h1 class="h2">License</h1>
+      </div>
+
+      <p>The project code is licensed under the <a href="https://github.com/NicholasBlaskey/DATA477-capping/blob/main/LICENSE">MIT License</a></p>
+
+      
+    </main>
+</div>
+
+<!-- Bootstrap core JavaScript
+     ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="./deps/jquery-3.6.0.min.js" ></script>
+<script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+  <script src="./deps/popper.min.js"></script>
+  <script src="./deps/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+
+  <script>
+    $('.datepicker').datepicker({orientation: "bottom"})
+  </script>
+  
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+  
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+  
+  <!-- Graphs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.7/chartjs-plugin-annotation.min.js"></script>
+
+  <script>
+    $(function(){
+    $("#navBar").load("./navBar.html", function() {
+    $("#homeMenu").addClass("active");    
+    })});
+  </script>
+
+  </script>
+  <!-- Icons -->
+  <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+  <script>
+    feather.replace()
+  </script>
+</body>
+</html>

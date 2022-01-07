@@ -1,0 +1,14 @@
+version: "2"
+services:
+   database:
+     build: .
+     ports:
+         - "5432:5432"
+     container_name: basketball_db
+     volumes:
+         - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+     hostname: "basketball_db"
+     environment:
+         POSTGRES_USER: globetrotter
+         POSTGRES_PASSWORD: alpacaalpaca
+         POSTGRES_DB: basketball

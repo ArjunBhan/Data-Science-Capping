@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../favicon.ico">
+
+    <title>Globetrotters</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../deps/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../dashboard.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <div id="navBar"></div>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+        <h1 class="h2">Neural network configuration</h1>
+      </div>
+
+      <!-- Form to submit user information -->
+      <form>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="tweetInput">Tweet</label>
+            <input type="String" class="form-control" id="tweetInput" aria-describedby="starting money" value="LETS GO!">
+            <small id="startingMoneyHelp" class="form-text text-muted">Enter a Tweet </small>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-14">
+            <label for="startingDateInput">Starting date </label>
+            <input class="datepicker form-control" data-date-format="mm/dd/yyyy" orientation="bottom" id="startingDateInput" value="01/01/2017">
+            <small id="startingDateHelp" class="form-text text-muted">Input Date after 2003 season.</small>
+          </div>                
+        </div>
+        <div>
+          <div class="form-row">
+            <button type="button" id="submitBettingConfig" class="btn btn-primary mb-2">Submit</button>
+            <button type="button" id="hideButton" class="btn btn-danger mb-2" style="margin-left: 10px">Clear report</button>
+          </div>
+        </div>
+      </form>
+      
+      <div id="neuralReport">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+          <h1 class="h2">Game summary</h1>
+        </div>
+
+
+      <div class="row">
+        <dl class="row col-sm-4">
+          <p id="homeTeamName">Home</p>
+        </dl>
+        <dl class="row col-sm-4">
+          <p id="awayTeamName">Away</p>
+        </dl>
+      </div>
+      <div class="row">
+        <dl class="row col-sm-4">
+          <p>Chance to win</p>
+          <p id="HomeWin"></p>
+        </dl>
+        <dl class="row col-sm-4">
+          <p>Chance to win</p>
+          <p id="AwayWin"></p>
+        </dl>
+      </div>
+      <div class="row">
+        <dl class="row col-sm-4">
+          <p>First Round Score Home</p>
+          <p id="HomeFirstRoundScore"></p>
+        </dl>
+        <dl class="row col-sm-4">
+          <p>First Round Score Away</p>
+          <p id="AwayFirstRoundScore"></p>
+        </dl>
+      </div>
+      <div class="row">
+        <dl class="row col-sm-4">
+          <p>Second Round Score Home</p>
+          <p id="HomeSecondRoundScore"></p>
+        </dl>
+        <dl class="row col-sm-4">
+          <p>Second Round Score Away</p>
+          <p id="AwaySecondRoundScore"></p>
+        </dl>
+      </div>
+      <div class="row">
+        <dl class="row col-sm-4">
+          <p>Home Third Round Score</p>
+          <p id="HomeThirdRoundScore"></p>
+        </dl>
+        <dl class="row col-sm-4">
+          <p>Away Third Round Score</p>
+          <p id="AwayThirdRoundScore"></p>
+        </dl>
+      </div>
+      <div class="row">
+        <dl class="row col-sm-4">
+          <p>Home Fourth Round Score</p>
+          <p id="HomeFourthRoundScore"></p>
+        </dl>
+        <dl class="row col-sm-4">
+          <p>Away Fourth Round Score</p>
+          <p id="AwayFourthRoundScore"></p>
+        </dl>
+      </div>
+      <div class="row">
+        <dl class="row col-sm-4">
+          <p>Home Final Score</p>
+          <p id="HomeScore"></p>
+        </dl>
+        <dl class="row col-sm-4">
+          <p>Away Final Score</p>
+          <p id="AwayScore"></p>
+        </dl>
+      </div>
+      <div class="row">
+        <dl class="row col-sm-4">
+          <p>Database may have undefined values for final scores</p>
+        </dl>
+      </div>
+</div>
+</main>
+</div>
+</div>
+</div>
+
+<!-- Bootstrap core JavaScript
+     ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="../deps/jquery-3.6.0.min.js" ></script>
+<script src="../deps/popper.min.js"></script>
+<script src="../deps/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+
+<script>
+  $('.datepicker').datepicker({orientation: "bottom"})
+</script>
+
+<!-- Graphs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.7/chartjs-plugin-annotation.min.js"></script>
+<script src="../scripts/neuralNet.js"></script>
+
+<script>
+  $(function(){
+  $("#navBar").load("../navBar.html", function() {
+  $("#neuralMenu").addClass("active");    
+  })});
+</script>  
+
+<!-- Icons -->
+<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+<script>
+  feather.replace()
+</script>
+
+</body>
+</html>

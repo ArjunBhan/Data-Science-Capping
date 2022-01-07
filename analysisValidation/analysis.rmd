@@ -1,0 +1,685 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(ggplot2)
+```
+
+```{r}
+library(RPostgreSQL)
+con <- dbConnect(PostgreSQL(), user= "globetrotter", password="alpacaalpaca", dbname="basketball", host="blaskey.dev", port="5432")
+dbListTables(con)
+```
+
+```{r}
+player<-dbGetQuery(con, "select * from player")
+team<-dbGetQuery(con, "select * from team")
+pgd<-dbGetQuery(con, "select * from player_game_detail")
+team_ranking<-dbGetQuery(con, "select * from team_ranking")
+game<-dbGetQuery(con, "select * from game")
+```
+
+```{r}
+dbGetQuery(con, "select * from player where player_name='russell westbrook'")
+```
+
+```{r}
+ggplot(team, aes(x = min_year_in_nba_champ, y = reorder(abbreviation, min_year_in_nba_champ ))) +
+  geom_point()+xlim(1945,2021)
+```
+
+```{r}
+plot(player$weight, player$height, main="Player Height vs Weight Scatterplot", 
+   xlab="Player Weight", ylab="Player Height ", pch=19, cex=.55)
+```
+### Kobe Bryant Career Stats
+```{r}
+pt<-dbGetQuery(con, "select * from player where player_name='kobe bryant'")
+pgt<-dbGetQuery(con, "select * from player_game_detail where player_id=977")
+#dbGetQuery(con, "select * from player_game_detail where player_id=977")
+
+#Points Per Game
+ppg<-pgt$points
+ppg<-ppg[!is.na(ppg)]
+cp<-sum(ppg)
+gp<-length(ppg)
+c("Career PPG",sum(ppg)/length(ppg))
+
+#Assists Per Game
+assists<-pgt$assists
+assists<-assists[!is.na(assists)]
+ca<-sum(assists)
+gpl<-length(assists)
+c("Career Assists Per Game",sum(assists)/length(assists))
+
+#Steals Per Game
+steals<-pgt$steals
+steals<-steals[!is.na(steals)]
+cs<-sum(steals)
+gpla<-length(steals)
+c("Career Steals Per Game",sum(steals)/length(steals))
+
+#Blocks Per Game
+blocks<-pgt$blocked_shots
+blocks<-blocks[!is.na(blocks)]
+cb<-sum(blocks)
+lencb<-length(blocks)
+c("Career Blocks Per Game",sum(blocks)/length(blocks))
+
+#Turnovers Per Game
+to<-pgt$turonovers
+to<-to[!is.na(to)]
+cto<-sum(to)
+lento<-length(to)
+c("Career Turnovers Per Game",sum(to)/length(to))
+
+#Rebounds Per Game
+oreb<-pgt$offensive_rebounds
+dreb<-pgt$defensive_rebounds
+oreb<-oreb[!is.na(oreb)]
+dreb<-dreb[!is.na(dreb)]
+coreb<-sum(oreb)
+lenoreb<-length(oreb)
+cdreb<-sum(dreb)
+lendreb<-length(dreb)
+c("Career Rebounds Per Game",(sum(oreb)+sum(dreb))/length(oreb))
+
+#Career FG%
+fga<-pgt$field_goals_attempted
+fgm<-pgt$field_goals_made
+fga<-fga[!is.na(fga)]
+fgm<-fgm[!is.na(fgm)]
+sumfga<-sum(fga)
+lenfga<-length(fga)
+sumfgm<-sum(fgm)
+lenfgm<-length(fgm)
+c("Career FG %",(sum(fgm)/sum(fga))*100)
+
+#Career Three Point %
+tpa<-pgt$three_pointers_attempted
+tpm<-pgt$three_pointers_made
+tpa<-tpa[!is.na(tpa)]
+tpm<-tpm[!is.na(tpm)]
+sumtpa<-sum(tpa)
+lentpa<-length(tpa)
+sumtpm<-sum(tpm)
+lentpm<-length(tpm)
+c("Career Three Point %",(sum(tpm)/sum(tpa))*100)
+
+#Free Throw %
+fta<-pgt$free_throws_attempted
+ftm<-pgt$free_throws_made
+fta<-fta[!is.na(fta)]
+ftm<-ftm[!is.na(ftm)]
+sumfta<-sum(fta)
+lenfta<-length(fta)
+sumftm<-sum(ftm)
+lenftm<-length(ftm)
+c("Career FT %",(sum(ftm)/sum(fta))*100)
+
+
+```
+### Lebron Career Stats
+```{r}
+pt<-dbGetQuery(con, "select * from player where player_name='lebron james'")
+pgt<-dbGetQuery(con, "select * from player_game_detail where player_id=2544")
+#dbGetQuery(con, "select * from player_game_detail where player_id=2544")
+
+#Points Per Game
+ppg<-pgt$points
+ppg<-ppg[!is.na(ppg)]
+cp<-sum(ppg)
+gp<-length(ppg)
+c("Career PPG",sum(ppg)/length(ppg))
+
+#Assists Per Game
+assists<-pgt$assists
+assists<-assists[!is.na(assists)]
+ca<-sum(assists)
+gpl<-length(assists)
+c("Career Assists Per Game",sum(assists)/length(assists))
+
+#Steals Per Game
+steals<-pgt$steals
+steals<-steals[!is.na(steals)]
+cs<-sum(steals)
+gpla<-length(steals)
+c("Career Steals Per Game",sum(steals)/length(steals))
+
+#Blocks Per Game
+blocks<-pgt$blocked_shots
+blocks<-blocks[!is.na(blocks)]
+cb<-sum(blocks)
+lencb<-length(blocks)
+c("Career Blocks Per Game",sum(blocks)/length(blocks))
+
+#Turnovers Per Game
+to<-pgt$turonovers
+to<-to[!is.na(to)]
+cto<-sum(to)
+lento<-length(to)
+c("Career Turnovers Per Game",sum(to)/length(to))
+
+#Rebounds Per Game
+oreb<-pgt$offensive_rebounds
+dreb<-pgt$defensive_rebounds
+oreb<-oreb[!is.na(oreb)]
+dreb<-dreb[!is.na(dreb)]
+coreb<-sum(oreb)
+lenoreb<-length(oreb)
+cdreb<-sum(dreb)
+lendreb<-length(dreb)
+c("Career Rebounds Per Game",(sum(oreb)+sum(dreb))/length(oreb))
+
+#Career FG%
+fga<-pgt$field_goals_attempted
+fgm<-pgt$field_goals_made
+fga<-fga[!is.na(fga)]
+fgm<-fgm[!is.na(fgm)]
+sumfga<-sum(fga)
+lenfga<-length(fga)
+sumfgm<-sum(fgm)
+lenfgm<-length(fgm)
+c("Career FG %",(sum(fgm)/sum(fga))*100)
+
+#Career Three Point %
+tpa<-pgt$three_pointers_attempted
+tpm<-pgt$three_pointers_made
+tpa<-tpa[!is.na(tpa)]
+tpm<-tpm[!is.na(tpm)]
+sumtpa<-sum(tpa)
+lentpa<-length(tpa)
+sumtpm<-sum(tpm)
+lentpm<-length(tpm)
+c("Career Three Point %",(sum(tpm)/sum(tpa))*100)
+
+#Free Throw %
+fta<-pgt$free_throws_attempted
+ftm<-pgt$free_throws_made
+fta<-fta[!is.na(fta)]
+ftm<-ftm[!is.na(ftm)]
+sumfta<-sum(fta)
+lenfta<-length(fta)
+sumftm<-sum(ftm)
+lenftm<-length(ftm)
+c("Career FT %",(sum(ftm)/sum(fta))*100)
+```
+
+### Kevin Durant Career Stats
+```{r}
+pt<-dbGetQuery(con, "select * from player where player_name='kevin durant'")
+pgt<-dbGetQuery(con, "select * from player_game_detail where player_id=201142")
+
+#dbGetQuery(con, "select * from player where player_name='kevin durant'")
+#dbGetQuery(con, "select * from player_game_detail where player_id=201142")
+
+#Points Per Game
+ppg<-pgt$points
+ppg<-ppg[!is.na(ppg)]
+cp<-sum(ppg)
+gp<-length(ppg)
+c("Career PPG",sum(ppg)/length(ppg))
+
+#Assists Per Game
+assists<-pgt$assists
+assists<-assists[!is.na(assists)]
+ca<-sum(assists)
+gpl<-length(assists)
+c("Career Assists Per Game",sum(assists)/length(assists))
+
+#Steals Per Game
+steals<-pgt$steals
+steals<-steals[!is.na(steals)]
+cs<-sum(steals)
+gpla<-length(steals)
+c("Career Steals Per Game",sum(steals)/length(steals))
+
+#Blocks Per Game
+blocks<-pgt$blocked_shots
+blocks<-blocks[!is.na(blocks)]
+cb<-sum(blocks)
+lencb<-length(blocks)
+c("Career Blocks Per Game",sum(blocks)/length(blocks))
+
+#Turnovers Per Game
+to<-pgt$turonovers
+to<-to[!is.na(to)]
+cto<-sum(to)
+lento<-length(to)
+c("Career Turnovers Per Game",sum(to)/length(to))
+
+#Rebounds Per Game
+oreb<-pgt$offensive_rebounds
+dreb<-pgt$defensive_rebounds
+oreb<-oreb[!is.na(oreb)]
+dreb<-dreb[!is.na(dreb)]
+coreb<-sum(oreb)
+lenoreb<-length(oreb)
+cdreb<-sum(dreb)
+lendreb<-length(dreb)
+c("Career Rebounds Per Game",(sum(oreb)+sum(dreb))/length(oreb))
+
+#Career FG%
+fga<-pgt$field_goals_attempted
+fgm<-pgt$field_goals_made
+fga<-fga[!is.na(fga)]
+fgm<-fgm[!is.na(fgm)]
+sumfga<-sum(fga)
+lenfga<-length(fga)
+sumfgm<-sum(fgm)
+lenfgm<-length(fgm)
+c("Career FG %",(sum(fgm)/sum(fga))*100)
+
+#Career Three Point %
+tpa<-pgt$three_pointers_attempted
+tpm<-pgt$three_pointers_made
+tpa<-tpa[!is.na(tpa)]
+tpm<-tpm[!is.na(tpm)]
+sumtpa<-sum(tpa)
+lentpa<-length(tpa)
+sumtpm<-sum(tpm)
+lentpm<-length(tpm)
+c("Career Three Point %",(sum(tpm)/sum(tpa))*100)
+
+#Free Throw %
+fta<-pgt$free_throws_attempted
+ftm<-pgt$free_throws_made
+fta<-fta[!is.na(fta)]
+ftm<-ftm[!is.na(ftm)]
+sumfta<-sum(fta)
+lenfta<-length(fta)
+sumftm<-sum(ftm)
+lenftm<-length(ftm)
+c("Career FT %",(sum(ftm)/sum(fta))*100)
+```
+
+### Steph Curry Career Stats
+```{r}
+pt<-dbGetQuery(con, "select * from player where player_name='steph curry'")
+pgt<-dbGetQuery(con, "select * from player_game_detail where player_id=201939")
+
+#dbGetQuery(con, "select * from player where player_name='stephen curry'")
+#dbGetQuery(con, "select * from player_game_detail where player_id=201939")
+
+#Points Per Game
+ppg<-pgt$points
+ppg<-ppg[!is.na(ppg)]
+cp<-sum(ppg)
+gp<-length(ppg)
+c("Career PPG",sum(ppg)/length(ppg))
+
+#Assists Per Game
+assists<-pgt$assists
+assists<-assists[!is.na(assists)]
+ca<-sum(assists)
+gpl<-length(assists)
+c("Career Assists Per Game",sum(assists)/length(assists))
+
+#Steals Per Game
+steals<-pgt$steals
+steals<-steals[!is.na(steals)]
+cs<-sum(steals)
+gpla<-length(steals)
+c("Career Steals Per Game",sum(steals)/length(steals))
+
+#Blocks Per Game
+blocks<-pgt$blocked_shots
+blocks<-blocks[!is.na(blocks)]
+cb<-sum(blocks)
+lencb<-length(blocks)
+c("Career Blocks Per Game",sum(blocks)/length(blocks))
+
+#Turnovers Per Game
+to<-pgt$turonovers
+to<-to[!is.na(to)]
+cto<-sum(to)
+lento<-length(to)
+c("Career Turnovers Per Game",sum(to)/length(to))
+
+#Rebounds Per Game
+oreb<-pgt$offensive_rebounds
+dreb<-pgt$defensive_rebounds
+oreb<-oreb[!is.na(oreb)]
+dreb<-dreb[!is.na(dreb)]
+coreb<-sum(oreb)
+lenoreb<-length(oreb)
+cdreb<-sum(dreb)
+lendreb<-length(dreb)
+c("Career Rebounds Per Game",(sum(oreb)+sum(dreb))/length(oreb))
+
+#Career FG%
+fga<-pgt$field_goals_attempted
+fgm<-pgt$field_goals_made
+fga<-fga[!is.na(fga)]
+fgm<-fgm[!is.na(fgm)]
+sumfga<-sum(fga)
+lenfga<-length(fga)
+sumfgm<-sum(fgm)
+lenfgm<-length(fgm)
+c("Career FG %",(sum(fgm)/sum(fga))*100)
+
+#Career Three Point %
+tpa<-pgt$three_pointers_attempted
+tpm<-pgt$three_pointers_made
+tpa<-tpa[!is.na(tpa)]
+tpm<-tpm[!is.na(tpm)]
+sumtpa<-sum(tpa)
+lentpa<-length(tpa)
+sumtpm<-sum(tpm)
+lentpm<-length(tpm)
+c("Career Three Point %",(sum(tpm)/sum(tpa))*100)
+
+#Free Throw %
+fta<-pgt$free_throws_attempted
+ftm<-pgt$free_throws_made
+fta<-fta[!is.na(fta)]
+ftm<-ftm[!is.na(ftm)]
+sumfta<-sum(fta)
+lenfta<-length(fta)
+sumftm<-sum(ftm)
+lenftm<-length(ftm)
+c("Career FT %",(sum(ftm)/sum(fta))*100)
+```
+### 2020 Bucks Points Per Game
+```{r}
+home<-dbGetQuery(con, "select * from game where home_team_id=1610612749 and season=2020")
+away<-dbGetQuery(con, "select * from game where away_team_id=1610612749 and season=2020")
+
+hppg<-c(home$home_first+home$home_second+home$home_third+home$home_fourth)
+hppg<-hppg[!is.na(hppg)]
+sppg<-sum(hppg)
+lenppg<-length(hppg)
+c("Home PPG",sum(hppg)/length(hppg))
+
+appg<-c(away$away_first+away$away_second+away$away_third+away$away_fourth)
+appg<-appg[!is.na(appg)]
+sppg<-sum(appg)
+lenppg<-length(appg)
+c("Away PPG",sum(appg)/length(appg))
+
+c("Total PPG",(sum(hppg)+sum(appg))/(length(hppg)+length(appg)))
+```
+### 2020 Knicks Points Per Game
+```{r}
+home<-dbGetQuery(con, "select * from game where home_team_id=1610612752 and season=2020")
+away<-dbGetQuery(con, "select * from game where away_team_id=1610612752 and season=2020")
+
+
+hppg<-c(home$home_first+home$home_second+home$home_third+home$home_fourth)
+hppg<-hppg[!is.na(hppg)]
+sppg<-sum(hppg)
+lenppg<-length(hppg)
+c("Home PPG",sum(hppg)/length(hppg))
+
+appg<-c(away$away_first+away$away_second+away$away_third+away$away_fourth)
+appg<-appg[!is.na(appg)]
+sppg<-sum(appg)
+lenppg<-length(appg)
+c("Away PPG",sum(appg)/length(appg))
+
+c("Total PPG",(sum(hppg)+sum(appg))/(length(hppg)+length(appg)))
+```
+
+
+### Seph Curry Stats 2016
+```{r}
+p<-dbGetQuery(con, "select * from player_game_detail where player_id=201939")
+g<-dbGetQuery(con, "select * from game where season=2016")
+mergedData <- merge(p, g, by = "game_id")
+mergedData
+
+#Points Per Game
+ppg<-mergedData$points
+ppg<-ppg[!is.na(ppg)]
+cp<-sum(ppg)
+gp<-length(ppg)
+c("PPG",sum(ppg)/length(ppg))
+
+#Assists Per Game
+assists<-mergedData$assists
+assists<-assists[!is.na(assists)]
+ca<-sum(assists)
+gpl<-length(assists)
+c("Assists Per Game",sum(assists)/length(assists))
+
+#Steals Per Game
+steals<-mergedData$steals
+steals<-steals[!is.na(steals)]
+cs<-sum(steals)
+gpla<-length(steals)
+c("Steals Per Game",sum(steals)/length(steals))
+
+#Blocks Per Game
+blocks<-mergedData$blocked_shots
+blocks<-blocks[!is.na(blocks)]
+cb<-sum(blocks)
+lencb<-length(blocks)
+c("Blocks Per Game",sum(blocks)/length(blocks))
+
+#Turnovers Per Game
+to<-mergedData$turonovers
+to<-to[!is.na(to)]
+cto<-sum(to)
+lento<-length(to)
+c("Turnovers Per Game",sum(to)/length(to))
+
+#Rebounds Per Game
+oreb<-mergedData$offensive_rebounds
+dreb<-mergedData$defensive_rebounds
+oreb<-oreb[!is.na(oreb)]
+dreb<-dreb[!is.na(dreb)]
+coreb<-sum(oreb)
+lenoreb<-length(oreb)
+cdreb<-sum(dreb)
+lendreb<-length(dreb)
+c("Rebounds Per Game",(sum(oreb)+sum(dreb))/length(oreb))
+
+#Career FG%
+fga<-mergedData$field_goals_attempted
+fgm<-mergedData$field_goals_made
+fga<-fga[!is.na(fga)]
+fgm<-fgm[!is.na(fgm)]
+sumfga<-sum(fga)
+lenfga<-length(fga)
+sumfgm<-sum(fgm)
+lenfgm<-length(fgm)
+c("FG %",(sum(fgm)/sum(fga))*100)
+
+#Career Three Point %
+tpa<-mergedData$three_pointers_attempted
+tpm<-mergedData$three_pointers_made
+tpa<-tpa[!is.na(tpa)]
+tpm<-tpm[!is.na(tpm)]
+sumtpa<-sum(tpa)
+lentpa<-length(tpa)
+sumtpm<-sum(tpm)
+lentpm<-length(tpm)
+c("Three Point %",(sum(tpm)/sum(tpa))*100)
+
+#Free Throw %
+fta<-mergedData$free_throws_attempted
+ftm<-mergedData$free_throws_made
+fta<-fta[!is.na(fta)]
+ftm<-ftm[!is.na(ftm)]
+sumfta<-sum(fta)
+lenfta<-length(fta)
+sumftm<-sum(ftm)
+lenftm<-length(ftm)
+c("FT %",(sum(ftm)/sum(fta))*100)
+```
+### Lebron James Stats 2003
+```{r}
+p<-dbGetQuery(con, "select * from player_game_detail where player_id=2544")
+g<-dbGetQuery(con, "select * from game where season=2003")
+mergedData <- merge(p, g, by = "game_id")
+
+
+#Points Per Game
+ppg<-mergedData$points
+ppg<-ppg[!is.na(ppg)]
+cp<-sum(ppg)
+gp<-length(ppg)
+c("PPG",sum(ppg)/length(ppg))
+
+#Assists Per Game
+assists<-mergedData$assists
+assists<-assists[!is.na(assists)]
+ca<-sum(assists)
+gpl<-length(assists)
+c("Assists Per Game",sum(assists)/length(assists))
+
+#Steals Per Game
+steals<-mergedData$steals
+steals<-steals[!is.na(steals)]
+cs<-sum(steals)
+gpla<-length(steals)
+c("Steals Per Game",sum(steals)/length(steals))
+
+#Blocks Per Game
+blocks<-mergedData$blocked_shots
+blocks<-blocks[!is.na(blocks)]
+cb<-sum(blocks)
+lencb<-length(blocks)
+c("Blocks Per Game",sum(blocks)/length(blocks))
+
+#Turnovers Per Game
+to<-mergedData$turonovers
+to<-to[!is.na(to)]
+cto<-sum(to)
+lento<-length(to)
+c("Turnovers Per Game",sum(to)/length(to))
+
+#Rebounds Per Game
+oreb<-mergedData$offensive_rebounds
+dreb<-mergedData$defensive_rebounds
+oreb<-oreb[!is.na(oreb)]
+dreb<-dreb[!is.na(dreb)]
+coreb<-sum(oreb)
+lenoreb<-length(oreb)
+cdreb<-sum(dreb)
+lendreb<-length(dreb)
+c("Rebounds Per Game",(sum(oreb)+sum(dreb))/length(oreb))
+
+#Career FG%
+fga<-mergedData$field_goals_attempted
+fgm<-mergedData$field_goals_made
+fga<-fga[!is.na(fga)]
+fgm<-fgm[!is.na(fgm)]
+sumfga<-sum(fga)
+lenfga<-length(fga)
+sumfgm<-sum(fgm)
+lenfgm<-length(fgm)
+c("FG %",(sum(fgm)/sum(fga))*100)
+
+#Career Three Point %
+tpa<-mergedData$three_pointers_attempted
+tpm<-mergedData$three_pointers_made
+tpa<-tpa[!is.na(tpa)]
+tpm<-tpm[!is.na(tpm)]
+sumtpa<-sum(tpa)
+lentpa<-length(tpa)
+sumtpm<-sum(tpm)
+lentpm<-length(tpm)
+c("Three Point %",(sum(tpm)/sum(tpa))*100)
+
+#Free Throw %
+fta<-mergedData$free_throws_attempted
+ftm<-mergedData$free_throws_made
+fta<-fta[!is.na(fta)]
+ftm<-ftm[!is.na(ftm)]
+sumfta<-sum(fta)
+lenfta<-length(fta)
+sumftm<-sum(ftm)
+lenftm<-length(ftm)
+c("FT %",(sum(ftm)/sum(fta))*100)
+```
+### Russell Westbrook Stats 2016
+```{r}
+p<-dbGetQuery(con, "select * from player_game_detail where player_id=201566")
+g<-dbGetQuery(con, "select * from game where season=2016")
+mergedData <- merge(p, g, by = "game_id")
+
+
+#Points Per Game
+ppg<-mergedData$points
+ppg<-ppg[!is.na(ppg)]
+cp<-sum(ppg)
+gp<-length(ppg)
+c("PPG",sum(ppg)/length(ppg))
+
+#Assists Per Game
+assists<-mergedData$assists
+assists<-assists[!is.na(assists)]
+ca<-sum(assists)
+gpl<-length(assists)
+c("Assists Per Game",sum(assists)/length(assists))
+
+#Steals Per Game
+steals<-mergedData$steals
+steals<-steals[!is.na(steals)]
+cs<-sum(steals)
+gpla<-length(steals)
+c("Steals Per Game",sum(steals)/length(steals))
+
+#Blocks Per Game
+blocks<-mergedData$blocked_shots
+blocks<-blocks[!is.na(blocks)]
+cb<-sum(blocks)
+lencb<-length(blocks)
+c("Blocks Per Game",sum(blocks)/length(blocks))
+
+#Turnovers Per Game
+to<-mergedData$turonovers
+to<-to[!is.na(to)]
+cto<-sum(to)
+lento<-length(to)
+c("Turnovers Per Game",sum(to)/length(to))
+
+#Rebounds Per Game
+oreb<-mergedData$offensive_rebounds
+dreb<-mergedData$defensive_rebounds
+oreb<-oreb[!is.na(oreb)]
+dreb<-dreb[!is.na(dreb)]
+coreb<-sum(oreb)
+lenoreb<-length(oreb)
+cdreb<-sum(dreb)
+lendreb<-length(dreb)
+c("Rebounds Per Game",(sum(oreb)+sum(dreb))/length(oreb))
+
+#Career FG%
+fga<-mergedData$field_goals_attempted
+fgm<-mergedData$field_goals_made
+fga<-fga[!is.na(fga)]
+fgm<-fgm[!is.na(fgm)]
+sumfga<-sum(fga)
+lenfga<-length(fga)
+sumfgm<-sum(fgm)
+lenfgm<-length(fgm)
+c("FG %",(sum(fgm)/sum(fga))*100)
+
+#Career Three Point %
+tpa<-mergedData$three_pointers_attempted
+tpm<-mergedData$three_pointers_made
+tpa<-tpa[!is.na(tpa)]
+tpm<-tpm[!is.na(tpm)]
+sumtpa<-sum(tpa)
+lentpa<-length(tpa)
+sumtpm<-sum(tpm)
+lentpm<-length(tpm)
+c("Three Point %",(sum(tpm)/sum(tpa))*100)
+
+#Free Throw %
+fta<-mergedData$free_throws_attempted
+ftm<-mergedData$free_throws_made
+fta<-fta[!is.na(fta)]
+ftm<-ftm[!is.na(ftm)]
+sumfta<-sum(fta)
+lenfta<-length(fta)
+sumftm<-sum(ftm)
+lenftm<-length(ftm)
+c("FT %",(sum(ftm)/sum(fta))*100)
+
+```
+

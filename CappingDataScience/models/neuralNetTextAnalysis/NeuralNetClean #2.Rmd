@@ -1,0 +1,28 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+#Use MatchDate.csv created by the Capping_Colab_1_Text_Analysis file
+GamesClean <- read.csv(file.choose())
+```
+
+```{r}
+#Ordering the database by date earliest to latest.  
+GamesClean <-GamesClean[order(as.Date(GamesClean$Date, format="%m/%d/%Y")),]
+```
+```{r}
+#Ordering the database by team name by alphabetical order. 
+GamesClean <-GamesClean[order(GamesClean$Team),]
+```
+```{r}
+GamesClean
+```
+
+```{r}
+#Turning ordered list into csv file
+write.csv(GamesClean,"GamesClean.csv")
+```
+
